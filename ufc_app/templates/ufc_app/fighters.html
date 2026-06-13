@@ -1,0 +1,57 @@
+{% extends 'ufc_app/base.html' %}
+
+{% block title %}Бойцы{% endblock %}
+
+{% block content %}
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Таблица 2</p>
+        <h1>Бойцы</h1>
+      </div>
+    </div>
+
+    <form method="post" class="grid-form">
+      {% csrf_token %}
+      <label><span>Имя</span>{{ form.full_name }}</label>
+      <label><span>Прозвище</span>{{ form.nickname }}</label>
+      <label><span>Страна</span>{{ form.country }}</label>
+      <label><span>Вес</span>{{ form.weight_class }}</label>
+      <label><span>Победы</span>{{ form.wins }}</label>
+      <label><span>Поражения</span>{{ form.losses }}</label>
+      <button type="submit">Добавить</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Боец</th>
+          <th>Прозвище</th>
+          <th>Страна</th>
+          <th>Вес</th>
+          <th>Рекорд</th>
+          <th class="actions">Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fighter in fighters %}
+          <tr>
+            <td>{{ fighter.id }}</td>
+            <td><strong>{{ fighter.full_name }}</strong></td>
+            <td>{{ fighter.nickname|default:"-" }}</td>
+            <td>{{ fighter.country }}</td>
+            <td>{{ fighter.weight_class.name }}</td>
+            <td>{{ fighter.wins }}-{{ fighter.losses }}</td>
+            <td class="actions">
+              <a class="button ghost" href="{% url 'fighter_update' fighter.id %}">Редактировать</a>
+              <a class="button danger" href="{% url 'fighter_delete' fighter.id %}" onclick="return confirm('Удалить бойца?')">Удалить</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td class="empty" colspan="7">Записей пока нет.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

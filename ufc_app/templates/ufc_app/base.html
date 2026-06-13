@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}UFC CRUD{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'ufc_app/styles.css' %}">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="{% url 'fighters_list' %}">UFC CRUD</a>
+      <nav>
+        <a href="{% url 'weight_classes_list' %}">Категории</a>
+        <a href="{% url 'fighters_list' %}">Бойцы</a>
+        <a href="{% url 'events_list' %}">Турниры</a>
+        <a href="{% url 'fights_list' %}">Бои</a>
+        <a href="{% url 'results_list' %}">Результаты</a>
+      </nav>
+    </header>
+
+    <main class="shell">
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+{% extends 'ufc_app/base.html' %}
+
+{% block title %}Результаты{% endblock %}
+
+{% block content %}
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Таблица 5</p>
+        <h1>Результаты боёв</h1>
+      </div>
+    </div>
+
+    <form method="post" class="grid-form">
+      {% csrf_token %}
+      <label><span>Бой</span>{{ form.fight }}</label>
+      <label><span>Победитель</span>{{ form.winner }}</label>
+      <label><span>Метод</span>{{ form.method }}</label>
+      <label><span>Раунд</span>{{ form.round_finished }}</label>
+      <label><span>Время</span>{{ form.time_finished }}</label>
+      <button type="submit">Добавить</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Бой</th>
+          <th>Победитель</th>
+          <th>Метод</th>
+          <th>Раунд / время</th>
+          <th class="actions">Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in results %}
+          <tr>
+            <td>{{ result.id }}</td>
+            <td>{{ result.fight.fighter_red.full_name }} vs {{ result.fight.fighter_blue.full_name }}</td>
+            <td><strong>{{ result.winner.full_name|default:"-" }}</strong></td>
+            <td>{{ result.method }}</td>
+            <td>{{ result.round_finished }} / {{ result.time_finished }}</td>
+            <td class="actions">
+              <a class="button ghost" href="{% url 'result_update' result.id %}">Редактировать</a>
+              <a class="button danger" href="{% url 'result_delete' result.id %}" onclick="return confirm('Удалить результат?')">Удалить</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td class="empty" colspan="6">Записей пока нет.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

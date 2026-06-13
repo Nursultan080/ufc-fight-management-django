@@ -1,0 +1,54 @@
+{% extends 'ufc_app/base.html' %}
+
+{% block title %}Бои{% endblock %}
+
+{% block content %}
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Таблица 4</p>
+        <h1>Бои</h1>
+      </div>
+    </div>
+
+    <form method="post" class="grid-form">
+      {% csrf_token %}
+      <label><span>Турнир</span>{{ form.event }}</label>
+      <label><span>Красный угол</span>{{ form.fighter_red }}</label>
+      <label><span>Синий угол</span>{{ form.fighter_blue }}</label>
+      <label><span>Вес</span>{{ form.weight_class }}</label>
+      <label><span>Раундов</span>{{ form.rounds_scheduled }}</label>
+      <button type="submit">Добавить</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Турнир</th>
+          <th>Бой</th>
+          <th>Вес</th>
+          <th>Раунды</th>
+          <th class="actions">Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fight in fights %}
+          <tr>
+            <td>{{ fight.id }}</td>
+            <td>{{ fight.event.title }}</td>
+            <td><strong>{{ fight.fighter_red.full_name }}</strong> vs <strong>{{ fight.fighter_blue.full_name }}</strong></td>
+            <td>{{ fight.weight_class.name }}</td>
+            <td>{{ fight.rounds_scheduled }}</td>
+            <td class="actions">
+              <a class="button ghost" href="{% url 'fight_update' fight.id %}">Редактировать</a>
+              <a class="button danger" href="{% url 'fight_delete' fight.id %}" onclick="return confirm('Удалить бой?')">Удалить</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td class="empty" colspan="6">Записей пока нет.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

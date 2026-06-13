@@ -1,0 +1,47 @@
+{% extends 'ufc_app/base.html' %}
+
+{% block title %}Весовые категории{% endblock %}
+
+{% block content %}
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Таблица 1</p>
+        <h1>Весовые категории</h1>
+      </div>
+    </div>
+
+    <form method="post" class="grid-form two">
+      {% csrf_token %}
+      <label><span>Название</span>{{ form.name }}</label>
+      <label><span>Лимит веса, lb</span>{{ form.max_weight_lb }}</label>
+      <button type="submit">Добавить</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Название</th>
+          <th>Лимит</th>
+          <th class="actions">Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in weight_classes %}
+          <tr>
+            <td>{{ item.id }}</td>
+            <td><strong>{{ item.name }}</strong></td>
+            <td>{{ item.max_weight_lb }} lb</td>
+            <td class="actions">
+              <a class="button ghost" href="{% url 'weight_class_update' item.id %}">Редактировать</a>
+              <a class="button danger" href="{% url 'weight_class_delete' item.id %}" onclick="return confirm('Удалить категорию?')">Удалить</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td class="empty" colspan="4">Записей пока нет.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

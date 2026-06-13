@@ -1,0 +1,74 @@
+[
+  {
+    "model": "ufc_app.weightclass",
+    "pk": 1,
+    "fields": {
+      "name": "Lightweight",
+      "max_weight_lb": 155
+    }
+  },
+  {
+    "model": "ufc_app.weightclass",
+    "pk": 2,
+    "fields": {
+      "name": "Welterweight",
+      "max_weight_lb": 170
+    }
+  },
+  {
+    "model": "ufc_app.fighter",
+    "pk": 1,
+    "fields": {
+      "full_name": "Islam Makhachev",
+      "nickname": "",
+      "country": "Russia",
+      "weight_class": 1,
+      "wins": 26,
+      "losses": 1
+    }
+  },
+  {
+    "model": "ufc_app.fighter",
+    "pk": 2,
+    "fields": {
+      "full_name": "Charles Oliveira",
+      "nickname": "Do Bronx",
+      "country": "Brazil",
+      "weight_class": 1,
+      "wins": 34,
+      "losses": 10
+    }
+  },
+  {
+    "model": "ufc_app.event",
+    "pk": 1,
+    "fields": {
+      "title": "UFC Sample Night",
+      "event_date": "2026-05-30",
+      "city": "Las Vegas",
+      "country": "USA"
+    }
+  },
+  {
+    "model": "ufc_app.fight",
+    "pk": 1,
+    "fields": {
+      "event": 1,
+      "fighter_red": 1,
+      "fighter_blue": 2,
+      "weight_class": 1,
+      "rounds_scheduled": 5
+    }
+  },
+  {
+    "model": "ufc_app.fightresult",
+    "pk": 1,
+    "fields": {
+      "fight": 1,
+      "winner": 1,
+      "method": "Submission",
+      "round_finished": 4,
+      "time_finished": "3:16"
+    }
+  }
+]

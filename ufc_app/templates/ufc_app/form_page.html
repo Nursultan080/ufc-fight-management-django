@@ -1,0 +1,23 @@
+{% extends 'ufc_app/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <section class="panel narrow">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Редактирование</p>
+        <h1>{{ title }}</h1>
+      </div>
+    </div>
+
+    <form method="post" class="stack-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="form-actions">
+        <a class="button ghost" href="{% url back_url %}">Отмена</a>
+        <button type="submit">Сохранить</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
